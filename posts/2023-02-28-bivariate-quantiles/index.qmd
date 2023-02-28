@@ -1,0 +1,176 @@
+---
+title: "Bivariate quantiles"
+author: "Deemah"
+date: "2023-02-28"
+categories: [paper review, quantiles]
+image: "fig-bvn-pdf-1.png"
+image-width: 200px
+bibliography: references.bib
+---
+
+## Introduction
+
+One of the recent papers I included in [Quantile Statistics Overlay](https://peeriodicals.com/peeriodicals/quantile-statistics-overlay) is @nair2023PropertiesBivariateDistributions. Prof. N. Unnikrishnan Nair is the [former head of Statistics Department](https://stats.cusat.ac.in/index.php/Faculty) at the Cochin University of Science and Technology (Kerala, India). His co-author here is Dr B. Vineshkumar, the [Assistant Professor of Statistics](http://gactvm.ac.in/?page_id=305) at the Government Arts College, Thiruvananthapuram (also in Kerala). Prof. N.U. Nair and Dr. Vineshkumar have been prolific contributors to the field of quantile statistics and I will be including more of their work into our overlay publication.
+
+## Bivariate Quantiles
+
+The earlier paper @vineshkumar2019BivariateQuantileFunctions provided the helpful definition of bivariate quantiles, which extends the univariate case for quantile function of $X$
+
+$$
+Q(u)=\inf\{x\vert F(x)\geq u\}, \; u\in I=[0,1]
+$$
+
+Recall, that the the joint survival function can be expressed as $\bar{F}(x_1,x_2)=1-F_1(x_1)-F_2(x_2)+F(x_1,x_2)$ [@kundu2009BivariateGeneralizedExponential], which is a multivariate extension of the univariate survival function $\bar{F}(x)=1-F(x)$. The joint survival function $\bar{F}(x_1,x_2)$ can be factorized as follows:
+
+$$
+\bar{F}(x_1, x_2)=P(X_1> x_1)P(X_2> x_2 \vert X_1 > x_1)= \bar{F}(x_1)\bar{F}_{21}(x_1,x_2)
+$$
+
+The conditional survival function $\bar{F}_{21}(x_1,x_2)$ and corresponding conditional quantile function $Q_{21}(u_2\vert u_1)$ is the main idea in the definition of bivariate quantiles.
+
+$$
+Q_{21}(u_2\vert u_1)=\inf\{x_2\vert F_{21}(Q_1,x_2)\geq u_2\}
+$$
+
+The conditional distribution function $F_{21}(x_1,x_2)$ should not be confused with the marginal distribution functions $F_1(x_1)$ and $F_2(x_2)$.
+
+## Examples
+
+@nair2023PropertiesBivariateDistributions provide several examples which might be illuminating to have a closer look at.
+
+### Mardia's bivariate Pareto distribution
+
+The authors provide a survival function for the Mardia's bivariate Pareto distribution
+
+$$
+\bar{F}(x_1, x_2)=(x_1+x_2-1)^{-c}, \; x_1, x_2>1, c>0
+$$
+
+The marginal quantile functions $Q_i(u_i)=(1-u_i)^{-1/c}-1$. This means that the marginal distribution functions are $F_i(x_i)=-\left(x_i+1\right)^{-c}+1$ for $i=1,2$. Therefore, we can find the conditional survival function $\bar{F}_{21}(x_1,x_2)=P(X_2>x_2\vert X_1>x_1)$ (and corresponding conditional distribution function $F_{21}(x_1,x_2)$), as
+
+$$
+\begin{gathered}
+\bar{F}_{21}(x_1,x_2)=\frac{\bar{F}(x_1, x_2)}{\bar{F}_1(x_1)}=\frac{(x_1+x_2-1)^{-c}}{(x_1+1)^{-c}}\\
+F_{21}(x_1,x_2)=1-\left(\frac{x_1+x_2-1}{x_1+1}\right)^{-c}
+\end{gathered}
+$$
+
+Now, we need to invert this, i.e. solve it for $x_2$, because we are interested in conditional quantile function $Q_{21}(u2\vert u1)$.
+
+$$
+\begin{gathered}
+u_2=1-\left(\frac{x_1+x_2-1}{x_1+1}\right)^{-c}\\
+(1-u_2)^{-1/c}=\frac{x_1+x_2-1}{x_1+1}\\
+(1-u_2)^{-1/c}(x_1+1)=x_1+x_2-1\\
+(1-u_2)^{-1/c}(x_1+1)-x_1+1=x_2
+\end{gathered}
+$$
+We are almost there. Now we drop in marginal $Q_1(u_1)=(1-u_1)^{-1/c}-1$ instead of $x_1$.
+
+$$
+\begin{gathered}
+(1-u_2)^{-1/c}((1-u_1)^{-1/c}-1+1)-(1-u_1)^{-1/c}+1+1=x_2\\
+(1-u_2)^{-1/c}(1-u_1)^{-1/c}-(1-u_1)^{-1/c}+2=x_2\\
+Q_{21}(u_1, u_2)=(1-u_1)^{-1/c}[(1-u_2)^{-1/c}-1]+2
+\end{gathered}
+$$
+
+This is a little different from the solution provided in the paper.
+
+### Bivariate Pareto distribution
+
+Another variant of bivariate Pareto distribution is provided by @vineshkumar2019BivariateQuantileFunctions. Here, the joint survival function is given by
+
+$$
+\bar{F}(x_1, x_2)=(1+a_1x_1+a_2x_2+bx_1x_2)^{-p}
+$$
+
+where $x_1,x_2>0, \;a_1,a_2>0, \; 0\leq b \leq (p-1)a_1a_2$. The marginal distribution is given by $F_i(x_i)=1-(1+a_ix_i)^{-p}$ and the inverse is $Q_i(u_i)=\frac{1}{a_i}(1-u_i)^{-1/p}-1$.
+
+We find the conditional survival and distribution functions as
+
+$$
+\begin{gathered}
+\bar{F}_{21}(x_1,x_2)=\frac{\bar{F}(x_1, x_2)}{\bar{F}_1(x_1)}=\frac{(1+a_1x_1+a_2x_2+bx_1x_2)^{-p}}{(1+a_1x_1)^{-p}}\\
+F_{21}(x_1,x_2)=1-\left(\frac{1+a_1x_1+a_2x_2+bx_1x_2}{1+a_1x_1}\right)^{-p}
+\end{gathered}
+$$
+
+Now we invert $F_{21}$ for $x_2$. 
+
+$$
+\begin{gathered}
+u_2=1-\left(\frac{1+a_1x_1+a_2x_2+bx_1x_2}{1+a_1x_1}\right)^{-p}\\
+x_2=\frac{\left(1-u_2\right)^{-\frac{1}{p}}+a_1x_1\left(1-u_2\right)^{-\frac{1}{p}}-a_1x_1-1}{a_2+bx_1}
+\end{gathered}
+$$
+
+And drop in the marginal quantile function instead of $x_1$.
+
+$$
+\begin{gathered}
+Q_{21}(u_2\vert u_1)=\frac{\left(1-u_2\right)^{-\frac{1}{p}}+a_1[\frac{1}{a_1}(1-u_1)^{-1/p}-1]\left(1-u_2\right)^{-\frac{1}{p}}-a_1[\frac{1}{a_1}(1-u_1)^{-1/p}-1]-1}{a_2+b[\frac{1}{a_1}(1-u_1)^{-1/p}-1]}\\
+Q_{21}(u_2\vert u_1)=\frac{\left(1-u_2\right)^{-\frac{1}{p}}+[(1-u_1)^{-1/p}-a_1]\left(1-u_2\right)^{-\frac{1}{p}}-[(1-u_1)^{-1/p}-a_1]-1}{a_2+b[\frac{1}{a_1}(1-u_1)^{-1/p}-1]}\\
+Q_{21}(u_2\vert u_1)=\frac{\left(1-u_2\right)^{-\frac{1}{p}}-1+[(1-u_1)^{-1/p}-a_1][\left(1-u_2\right)^{-\frac{1}{p}}-1]}{a_2+b[\frac{1}{a_1}(1-u_1)^{-1/p}-1]}\\
+Q_{21}(u_2\vert u_1)=\frac{a_1[\left(1-u_2\right)^{-\frac{1}{p}}-1][(1-u_1)^{-1/p}-a_1+1]}{a_1a_2+b[(1-u_1)^{-1/p}-a_1]}
+\end{gathered}
+$$
+This is also somewhat different from the example in the paper.
+
+
+### Gumbel's bivariate exponential distribution
+
+@gumbel1960BivariateExponentialDistributions proposed two kinds of bivariate exponential distributions. The Type I distribution has the survival function
+
+$$
+\bar{F}(x_1, x_2)=\exp[-\lambda_1x_1-\lambda_2x_2-\theta x_1x_2]\\
+$$
+
+The marginal quantile function is, of course, $Q_i(u_i)=-\ln(1-u_i)/\lambda_i$ and the corresponding marginal distribution function is $F_i(x_i)=1-\exp[-\lambda_i x_i]$.
+
+@gumbel1960BivariateExponentialDistributions defined the distribution by the joint distribution function, which is slightly more verbose than the survival function. 
+
+$$
+\begin{gathered}
+\bar{F}(x_1,x_2)=1-F_1(x_1)-F_2(x_2)+F(x_1,x_2)\\
+F(x_1, x_2)=\exp[-\lambda_1x_1-\lambda_2x_2-\theta x_1x_2]-1+1-\exp[-\lambda_1 x_1]+1-\exp[-\lambda_2 x_2]\\
+F(x_1, x_2)=1-\exp[-\lambda_1 x_1]-\exp[-\lambda_2 x_2]+\exp[-\lambda_1x_1-\lambda_2x_2-\theta x_1x_2]
+\end{gathered}
+$$
+
+The first step is to find the conditional survival and distribution functions.
+
+$$
+\begin{gathered}
+\bar{F}_{21}(x_1,x_2)=\frac{\bar{F}(x_1, x_2)}{\bar{F}_1(x_1)}=\frac{\exp[-\lambda_1x_1-\lambda_2x_2-\theta x_1x_2]}{\exp[-\lambda_1 x_1]}\\
+F_{21}(x_1,x_2)=1-\exp[-\lambda_2x_2-\theta x_1x_2]
+\end{gathered}
+$$
+
+Now we need to invert this conditional distribution function for $u_2$ and drop in the marginal quantile function $Q_1(u_1)$ in place of $x_1$.
+
+$$
+\begin{gathered}
+u_2=1-\exp[-\lambda_2x_2-\theta x_1x_2]\\
+1-u_2=\exp[-\lambda_2x_2-\theta x_1x_2]\\
+\ln(1-u_2)=-\lambda_2x_2-\theta x_1x_2\\
+\ln(1-u_2)=x_2(-\lambda_2-\theta x_1)\\
+\frac{\ln(1-u_2)}{-\lambda_2-\theta x_1}=x_2\\
+\frac{\ln(1-u_2)}{-\lambda_2-\theta [-\ln(1-u_1)/\lambda_1]}=x_2\\
+\frac{\lambda_1\ln(1-u_2)}{-\lambda_2\lambda_1-\theta [-\ln(1-u_1)]}=x_2\\
+Q_{21}(u_2\vert u_1)=\frac{-\lambda_1\ln(1-u_2)}{\lambda_2\lambda_1-\theta \ln(1-u_1)}\\
+\end{gathered}
+$$
+
+So the Gumbel bivariate exponential function becomes
+
+$$
+Q(u_1, u_2)=\left( \frac{1}{\lambda_1\ln(1-u_1)}, \frac{-\lambda_1\ln(1-u_2)}{\lambda_2\lambda_1-\theta \ln(1-u_1)}\right)
+$$
+
+This is the exactly the result reported in the paper.
+
+
+
+## References
+
