@@ -1,0 +1,27 @@
+project:
+  type: website
+
+website:
+  title: "\\$d /drive"
+  twitter-card:
+    creator: "@dmi3k"
+  navbar:
+    right:
+      - blog.qmd
+      - icon: github
+        href: https://github.com/dmi3kno
+      - icon: twitter
+        href: https://twitter.com/dmi3k
+execute:
+  freeze: auto
+format:
+  html:
+    theme:
+      - yeti
+      - styles.scss
+
+
+
+
+
+

@@ -1,0 +1,4 @@
+- source: project
+  netlify:
+    - id: "7a1abe06-4a12-4dbe-9b7e-cf28b59a6ec4"
+      url: "https://sharp-khorana-080c04.netlify.app"

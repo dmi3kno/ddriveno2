@@ -1,0 +1,19 @@
+---
+title: "Deemah"
+image: "img/Dmytro_SQ800.jpg"
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/dmi3k
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com/in/dperepolkin
+    - icon: github
+      text: Github
+      href: https://github.com/dmi3kno
+
+---
+
+Data, decisions and all things R

@@ -1,0 +1,18 @@
+---
+title: "Welcome To My Quarto Blog"
+author: "Deemah"
+date: "2023-02-24"
+categories: [news]
+---
+
+This is the first post in a Quarto blog. Welcome!
+
+![](thumbnail.jpg)
+
+This is my attempt to re-start the old blog which collapsed under the weight of the Hugo theme updates and my inability con keep the configuration current. I am restarting the blog in Hugo hoping this could be a longer-term solution. I also want to try and set up the continuous integration, so that I can have full Mathjax support and cross-referencing. 
+
+I plan to migrate some of the older posts to the new platform if and when the time allows. Many of them need to be updated and/or re-rendered to be compatible with the Quarto format. Since it looks like a lot of work at the moment, I will prioritize it when the time allows.
+
+Again, welcome to my blog and enjoy!
+
+Deemah

@@ -1,0 +1,15 @@
+---
+title: "Launching a Peeriodical"
+author: "Deemah"
+date: "2023-02-27"
+categories: [news, code, analysis]
+image: "QuantileStatisticsOverlay.jpg"
+image-width: 200px
+bibliography: references.bib
+---
+
+Many researchers have long been unhappy about the state of affairs in academic publishing. The "review-then-publish" model is broken [@crane2018PeerReviewWe]. Much has been said about how to fix it, but one of the solutions is a wide-spread adoption of "publish-then-review" model and proliferation of overlay journals as a new format for dissemination (or rather "curation") of academic papers. 
+
+Overlay journals are more similar to Spotify playlists, rather than to the record labels. The role of overlay journal editors is to monitor the market of pre-printed and traditionally published papers and to select and highlight the (peer reviewed) papers related to a particular topic, soliciting and administrating the peer-review process where required. The added value brought by an overlay journal in this model is in the process of curation ("handpicking") the papers which might be of interest to the journal audience and highlighting the relevant aspects of the selected publications to help the subscribers enjoy the articles more fully. 
+
+Today, I am happy to announce that we are launching the [Quantile Statistics Overlay](https://peeriodicals.com/peeriodicals/quantile-statistics-overlay)  on [Peeriodicals](https://peeriodicals.com/). The purpose of the journal is to collect the fundamental papers related to the statistical modeling with quantile functions. I will be blogging more about this subject, since this is the topic I enjoy greatly. Feel free to follow along by subscribing to  [Quantile Statistics Overlay](https://peeriodicals.com/peeriodicals/quantile-statistics-overlay) today.
