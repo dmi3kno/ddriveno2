@@ -8,6 +8,16 @@ image-width: 200px
 bibliography: references.bib
 ---
 
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+library(tidyverse)
+library(qpd)
+library(hrbrthemes)
+```
+
+
 ## Introduction
 
 One of the recent papers I included in [Quantile Statistics Overlay](https://peeriodicals.com/peeriodicals/quantile-statistics-overlay) is @nair2023PropertiesBivariateDistributions. Prof. N. Unnikrishnan Nair is the [former head of Statistics Department](https://stats.cusat.ac.in/index.php/Faculty) at the Cochin University of Science and Technology (Kerala, India). His co-author here is Dr B. Vineshkumar, the [Assistant Professor of Statistics](http://gactvm.ac.in/?page_id=305) at the Government Arts College, Thiruvananthapuram (also in Kerala). Prof. N.U. Nair and Dr. Vineshkumar have been prolific contributors to the field of quantile statistics and I will be including more of their work into our overlay publication.
@@ -53,18 +63,18 @@ The conditional distribution function $F_{21}(x_1,x_2)$ should not be confused w
 
 ### Mardia's bivariate Pareto distribution
 
-The authors provide a survival function for the Mardia's bivariate Pareto distribution
+The authors provide a survival function for the Mardia's bivariate Pareto distribution^[There seems to be a typo in the paper. It says -1 instead of +1 in the survival function]
 
 $$
-\bar{F}(x_1, x_2)=(x_1+x_2-1)^{-c}, \; x_1, x_2>1, c>0
+\bar{F}(x_1, x_2)=(x_1+x_2+1)^{-c}, \; x_1, x_2>1, c>0
 $$
 
 The marginal quantile functions $Q_i(u_i)=(1-u_i)^{-1/c}-1$, therefore the marginal distribution functions are $F_i(x_i)=-\left(x_i+1\right)^{-c}+1$ for $i=1,2$. We can find the conditional survival function $\bar{F}_{21}(x_1,x_2)=P(X_2>x_2\vert X_1>x_1)$, and corresponding conditional distribution function $F_{21}(x_1,x_2)$ as
 
 $$
 \begin{gathered}
-\bar{F}_{21}(x_1,x_2)=\frac{\bar{F}(x_1, x_2)}{\bar{F}_1(x_1)}=\frac{(x_1+x_2-1)^{-c}}{(x_1+1)^{-c}}\\
-F_{21}(x_1,x_2)=1-\left(\frac{x_1+x_2-1}{x_1+1}\right)^{-c}
+\bar{F}_{21}(x_1,x_2)=\frac{\bar{F}(x_1, x_2)}{\bar{F}_1(x_1)}=\frac{(x_1+x_2+1)^{-c}}{(x_1+1)^{-c}}\\
+F_{21}(x_1,x_2)=1-\left(\frac{x_1+x_2+1}{x_1+1}\right)^{-c}
 \end{gathered}
 $$
 
@@ -72,10 +82,10 @@ Now, we need to invert this, i.e. solve it for $x_2$, because we are interested 
 
 $$
 \begin{gathered}
-u_2=1-\left(\frac{x_1+x_2-1}{x_1+1}\right)^{-c}\\
-(1-u_2)^{-1/c}=\frac{x_1+x_2-1}{x_1+1}\\
-(1-u_2)^{-1/c}(x_1+1)=x_1+x_2-1\\
-(1-u_2)^{-1/c}(x_1+1)-x_1+1=x_2
+u_2=1-\left(\frac{x_1+x_2+1}{x_1+1}\right)^{-c}\\
+(1-u_2)^{-1/c}=\frac{x_1+x_2+1}{x_1+1}\\
+(1-u_2)^{-1/c}(x_1+1)=x_1+x_2+1\\
+(1-u_2)^{-1/c}(x_1+1)-x_1-1=x_2
 \end{gathered}
 $$
 
@@ -83,13 +93,38 @@ We are almost there. Now we drop in marginal $Q_1(u_1)=(1-u_1)^{-1/c}-1$ instead
 
 $$
 \begin{gathered}
-(1-u_2)^{-1/c}([(1-u_1)^{-1/c}-1]+1)-[(1-u_1)^{-1/c}-1]+1=x_2\\
-(1-u_2)^{-1/c}(1-u_1)^{-1/c}-(1-u_1)^{-1/c}+2=x_2\\
-Q_{21}(u_1, u_2)=(1-u_1)^{-1/c}[(1-u_2)^{-1/c}-1]+2
+(1-u_2)^{-1/c}([(1-u_1)^{-1/c}-1]+1)-[(1-u_1)^{-1/c}-1]-1=x_2\\
+(1-u_2)^{-1/c}(1-u_1)^{-1/c}-(1-u_1)^{-1/c}=x_2\\
+Q_{21}(u_1, u_2)=(1-u_1)^{-1/c}[(1-u_2)^{-1/c}-1]
 \end{gathered}
 $$
 
-This is a little different from the solution provided in the paper.
+Which is exactly the solution provided in the paper. Now we can proceed to sampling from our brand new bivariate quantile function.
+
+```{r}
+#| echo: true
+qmardiapareto1 <- function(u, cc){
+  mic <- (-1/cc) #minus inverse c
+  (1-u)^mic-1
+}
+
+qmardiapareto21 <- function(u2, u1, cc){
+  mic <- (-1/cc)
+  (1-u1)^mic*((1-u2)^mic-1)
+}
+
+set.seed(1)
+n <- 1e3
+cc <- 10
+tibble::tibble(u1=runif(n),
+               u2=runif(n),
+               x1=qmardiapareto1(u1,cc),
+               x2=qmardiapareto21(u2, u1, cc)) %>%  
+  ggplot()+
+  geom_point(aes(x1, x2))+
+  theme_ipsum_rc(grid_col="grey95")
+
+```
 
 ### Bivariate Pareto distribution
 
@@ -99,7 +134,7 @@ $$
 \bar{F}(x_1, x_2)=(1+a_1x_1+a_2x_2+bx_1x_2)^{-p}
 $$
 
-where $x_1,x_2>0, \;a_1,a_2>0, \; 0\leq b \leq (p-1)a_1a_2$. The marginal distribution is given by $F_i(x_i)=1-(1+a_ix_i)^{-p}$ and the inverse is $Q_i(u_i)=\frac{1}{a_i}(1-u_i)^{-1/p}-1$.
+where $x_1,x_2>0, \;a_1,a_2>0, \; 0\leq b \leq (p-1)a_1a_2$. The marginal distribution is given by $F_i(x_i)=1-(1+a_ix_i)^{-p}$ and the inverse is $Q_i(u_i)=\frac{1}{a_i}[(1-u_i)^{-1/p}-1]$^[Note that the paper missed the square brackets around the basic quantile function].
 
 We find the conditional survival and distribution functions as
 
@@ -126,15 +161,42 @@ And drop in the marginal quantile function instead of $x_1$.
 
 $$
 \begin{gathered}
-Q_{21}(u_2\vert u_1)=\frac{\left(1-u_2\right)^{-\frac{1}{p}}+a_1[\frac{1}{a_1}(1-u_1)^{-1/p}-1]\left(1-u_2\right)^{-\frac{1}{p}}-a_1[\frac{1}{a_1}(1-u_1)^{-1/p}-1]-1}{a_2+b[\frac{1}{a_1}(1-u_1)^{-1/p}-1]}\\
-Q_{21}(u_2\vert u_1)=\frac{\left(1-u_2\right)^{-\frac{1}{p}}+[(1-u_1)^{-1/p}-a_1]\left(1-u_2\right)^{-\frac{1}{p}}-[(1-u_1)^{-1/p}-a_1]-1}{a_2+b[\frac{1}{a_1}(1-u_1)^{-1/p}-1]}\\
-Q_{21}(u_2\vert u_1)=\frac{\left(1-u_2\right)^{-\frac{1}{p}}-1+[(1-u_1)^{-1/p}-a_1][\left(1-u_2\right)^{-\frac{1}{p}}-1]}{a_2+b[\frac{1}{a_1}(1-u_1)^{-1/p}-1]}\\
-Q_{21}(u_2\vert u_1)=\frac{a_1[\left(1-u_2\right)^{-\frac{1}{p}}-1][(1-u_1)^{-1/p}-a_1+1]}{a_1a_2+b[(1-u_1)^{-1/p}-a_1]}
+Q_{21}(u_2\vert u_1)=\frac{\left(1-u_2\right)^{-\frac{1}{p}}+a_1x_1\left(1-u_2\right)^{-\frac{1}{p}}-a_1x_1-1}{a_2+bx_1}\\
+Q_{21}(u_2\vert u_1)=\frac{\left(1-u_2\right)^{-\frac{1}{p}}+a_1[\frac{1}{a_1}[(1-u_1)^{-1/p}-1]]\left(1-u_2\right)^{-\frac{1}{p}}-a_1[\frac{1}{a_1}[(1-u_1)^{-1/p}-1]]-1}{a_2+b[\frac{1}{a_1}[(1-u_1)^{-1/p}-1]]}\\
+Q_{21}(u_2\vert u_1)=\frac{\left(1-u_2\right)^{-\frac{1}{p}}+[(1-u_1)^{-1/p}-1]\left(1-u_2\right)^{-\frac{1}{p}}-[(1-u_1)^{-1/p}-1]-1}{a_2+\frac{b}{a_1}[(1-u_1)^{-1/p}-1]}\\
+Q_{21}(u_2\vert u_1)=\frac{a_1[\left(1-u_2\right)^{-\frac{1}{p}}(1-u_1)^{-1/p}-(1-u_1)^{-1/p}]}{a_1a_2+b[(1-u_1)^{-1/p}-1]}\\
+Q_{21}(u_2\vert u_1)=\frac{a_1(1-u_1)^{-1/p}[\left(1-u_2\right)^{-\frac{1}{p}}-1]]}{a_1a_2+b[(1-u_1)^{-1/p}-1]}
 \end{gathered}
 $$
 
-This is also somewhat different from the solution in the paper.
+Which is exactly the result in the paper.
 
+```{r}
+#| echo: true
+qotherpareto1 <- function(u, a, p){
+  mip <- (-1/p) #minus inverse p
+  1/a*(1-u)^mip-1
+}
+
+qotherpareto21 <- function(u2, u1, a2, a1, b, p){
+  mip <- (-1/p)
+  num <- a1*((1-u2)^mip-1)*((1-u1)^mip)
+  den <- a1*a2+b*((1-u1)^mip-1)
+  num/den
+}
+
+set.seed(1)
+n <- 1e3
+p <- 10
+a2 <- 0.2; a1 <- 0.4; b <- 0.1
+tibble::tibble(u1=runif(n),
+               u2=runif(n),
+               x1=qotherpareto1(u1, a1, p),
+               x2=qotherpareto21(u2, u1, a2, a1, b, p)) %>%  
+  ggplot()+
+  geom_point(aes(x1, x2))+
+  theme_ipsum_rc(grid_col="grey95")
+```
 
 ### Gumbel's bivariate exponential distribution
 
@@ -188,7 +250,28 @@ $$
 
 This is the exactly the result reported in the paper.
 
+```{r}
+#| echo: true
+qgumbelexp1 <- function(u, lambda){
+ -log(1-u)/lambda
+}
 
+qgumbelexp21 <- function(u2, u1, lambda2, lambda1, theta){
+ -lambda1*log(1-u2)/(lambda1*lambda2-theta*log(1-u1))
+}
+
+set.seed(1)
+n <- 1e3
+theta <- 3
+lambda1 <- 1; lambda2 <- 2
+tibble::tibble(u1=runif(n),
+               u2=runif(n),
+               x1=qgumbelexp1(u1, lambda1),
+               x2=qgumbelexp21(u2, u1, lambda2, lambda1, theta)) %>%  
+  ggplot()+
+  geom_point(aes(x1, x2))+
+  theme_ipsum_rc(grid_col="grey95")
+```
 
 ## References
 
