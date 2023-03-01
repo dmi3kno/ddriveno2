@@ -273,5 +273,25 @@ tibble::tibble(u1=runif(n),
   theme_ipsum_rc(grid_col="grey95")
 ```
 
+## Properties of bivariate quantiles
+
+You might ask: "Wow, that's a lot of math! Why do we care about bivariate quantiles?" and "Well, don't they require invertible joint distribution functions?"
+
+The cool thing about bivariate quantile functions (bQFs) come from their properties discussed in @nair2023PropertiesBivariateDistributions. The authors list 9 properties, which are, in some sense, extensions of @gilchrist2000StatisticalModellingQuantile properties for univariate QFs. In particular, the properties 6 through 9 are pretty cool.
+
+The authors start by stating that the conditional bQFs $Q_{21}$ do not necessarily have to come from inverting the conditional distribution function $F_{21}$. In fact, any left-continuous, increasing function in $u_2$, for all $u_1 \in [0,1]$ can be picked at $Q_{21}$ (provided that the combination $(Q_1, Q_{21})$ results in a meaningful bivariate model).
+
+It turns out (Property 6) that the conditional bQF $Q_{21}(u_2\vert u_1)$ can be constructed as a sum of two univariate QFs, i.e. this represents a valid bQF $(Q_1(u_1), Q_1(u_1)+Q_2(u_2))$. If $Q_1$ is left-bounded at zero, i.e. $Q_1(0)=0$ then the marginals of such bQF are $Q_1(u_1)$ and $Q_2(u_2)$! This finding generalizes Gilchrist's "addition rule" [@gilchrist2000StatisticalModellingQuantile]. Similar to the univariate case, also works for quantile densities (Property 7). The main implication here is that the bQFs can be defined without the reference to the join distribution function (and even without closed form $F(x_1, x_2)$)!
+
+Property 8 says that for the positive QFs the product is also a valid conditional bQF, generalizing the "product rule" [@gilchrist2000StatisticalModellingQuantile]. Finally, Property 9 generalizes the "Q-transformation rule", postulating that for every increasing transformation functions $T_1$ and $T_2$, $\left[T_1(Q_1(u_1)), T_1(Q_1(u_1))+T_2(Q_2(u_2))\right]$ is also a valid bQF.
+
+## Conclusion
+
+So why do we care? Given what we have discussed in @perepolkin2021TenetsQuantilebasedInference, priors can be defined using the quantile functions without the need to define the densities. This not only means that you dont need PDFs to define the prior, but also that you don't need QDF, because it will cancel itself with the Jacobian.
+
+Now with bQFs, you can define the bivariate priors using quantile functions, provided that the conditional bQF $Q_{21}$ makes sense.
+
+Perhaps some Stan examples would be in order. I am sure we will come back to the bivariate quantiles for some cool quantile distribution soon.
+
 ## References
 
