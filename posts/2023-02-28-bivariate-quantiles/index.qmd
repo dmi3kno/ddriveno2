@@ -17,16 +17,29 @@ One of the recent papers I included in [Quantile Statistics Overlay](https://pee
 The earlier paper @vineshkumar2019BivariateQuantileFunctions provided the helpful definition of bivariate quantiles, which extends the univariate case for quantile function of $X$
 
 $$
-Q(u)=\inf\{x\vert F(x)\geq u\}, \; u\in I=[0,1]
+\begin{gathered}
+Q_i(u_i)=\inf\{x_i\vert F_i(x_i)\geq u_i\}, \; u_i\in I=[0,1]
+\end{gathered}
 $$
 
-Recall, that the the joint survival function can be expressed as $\bar{F}(x_1,x_2)=1-F_1(x_1)-F_2(x_2)+F(x_1,x_2)$ [@kundu2009BivariateGeneralizedExponential], which is a multivariate extension of the univariate survival function $\bar{F}(x)=1-F(x)$. The joint survival function $\bar{F}(x_1,x_2)$ can be factorized as follows:
+The bivariate quantile function of $(X_1,X_2)$ is then given by
+
+$$
+\begin{gathered}
+Q(u_1, u_2)=(Q_1(u_1),Q_{21}(u_2\vert u_1))\\
+Q_1(u_1)=\inf\{x_1\vert F_1(x_1)\geq u_1\}\\
+Q_{21}(u_2\vert u_1)=\inf\{x_2\vert P(X_2\leq x_2 \vert X_1>Q_1(u_1))\geq u_2\}\\
+\end{gathered}
+$$
+
+The authors start by factorizing the joint survival function $\bar{F}(x_1,x_2)$ as follows:
 
 $$
 \bar{F}(x_1, x_2)=P(X_1> x_1)P(X_2> x_2 \vert X_1 > x_1)= \bar{F}(x_1)\bar{F}_{21}(x_1,x_2)
 $$
 
-The conditional survival function $\bar{F}_{21}(x_1,x_2)$ and corresponding conditional quantile function $Q_{21}(u_2\vert u_1)$ is the main idea in the definition of bivariate quantiles.
+Recall, that the the joint survival function is $\bar{F}(x_1,x_2)=1-F_1(x_1)-F_2(x_2)+F(x_1,x_2)$ [@kundu2009BivariateGeneralizedExponential], which is a multivariate extension of the univariate survival function $\bar{F}(x)=1-F(x)$. 
+The conditional survival function $\bar{F}_{21}(x_1,x_2)$ and the corresponding conditional quantile function $Q_{21}(u_2\vert u_1)$ constitute the main element in the definition of bivariate quantiles.
 
 $$
 Q_{21}(u_2\vert u_1)=\inf\{x_2\vert F_{21}(Q_1,x_2)\geq u_2\}
@@ -46,7 +59,7 @@ $$
 \bar{F}(x_1, x_2)=(x_1+x_2-1)^{-c}, \; x_1, x_2>1, c>0
 $$
 
-The marginal quantile functions $Q_i(u_i)=(1-u_i)^{-1/c}-1$. This means that the marginal distribution functions are $F_i(x_i)=-\left(x_i+1\right)^{-c}+1$ for $i=1,2$. Therefore, we can find the conditional survival function $\bar{F}_{21}(x_1,x_2)=P(X_2>x_2\vert X_1>x_1)$ (and corresponding conditional distribution function $F_{21}(x_1,x_2)$), as
+The marginal quantile functions $Q_i(u_i)=(1-u_i)^{-1/c}-1$, therefore the marginal distribution functions are $F_i(x_i)=-\left(x_i+1\right)^{-c}+1$ for $i=1,2$. We can find the conditional survival function $\bar{F}_{21}(x_1,x_2)=P(X_2>x_2\vert X_1>x_1)$, and corresponding conditional distribution function $F_{21}(x_1,x_2)$ as
 
 $$
 \begin{gathered}
@@ -65,11 +78,12 @@ u_2=1-\left(\frac{x_1+x_2-1}{x_1+1}\right)^{-c}\\
 (1-u_2)^{-1/c}(x_1+1)-x_1+1=x_2
 \end{gathered}
 $$
+
 We are almost there. Now we drop in marginal $Q_1(u_1)=(1-u_1)^{-1/c}-1$ instead of $x_1$.
 
 $$
 \begin{gathered}
-(1-u_2)^{-1/c}((1-u_1)^{-1/c}-1+1)-(1-u_1)^{-1/c}+1+1=x_2\\
+(1-u_2)^{-1/c}([(1-u_1)^{-1/c}-1]+1)-[(1-u_1)^{-1/c}-1]+1=x_2\\
 (1-u_2)^{-1/c}(1-u_1)^{-1/c}-(1-u_1)^{-1/c}+2=x_2\\
 Q_{21}(u_1, u_2)=(1-u_1)^{-1/c}[(1-u_2)^{-1/c}-1]+2
 \end{gathered}
@@ -79,7 +93,7 @@ This is a little different from the solution provided in the paper.
 
 ### Bivariate Pareto distribution
 
-Another variant of bivariate Pareto distribution is provided by @vineshkumar2019BivariateQuantileFunctions. Here, the joint survival function is given by
+Another variant of bivariate Pareto distribution is provided in @vineshkumar2019BivariateQuantileFunctions. Here, the joint survival function is given by
 
 $$
 \bar{F}(x_1, x_2)=(1+a_1x_1+a_2x_2+bx_1x_2)^{-p}
@@ -101,6 +115,9 @@ Now we invert $F_{21}$ for $x_2$.
 $$
 \begin{gathered}
 u_2=1-\left(\frac{1+a_1x_1+a_2x_2+bx_1x_2}{1+a_1x_1}\right)^{-p}\\
+(1-u_2)^{-1/p}=\frac{1+a_1x_1+a_2x_2+bx_1x_2}{1+a_1x_1}\\
+(1-u_2)^{-1/p}({1+a_1x_1})-1-a_1x_1=a_2x_2+bx_1x_2\\
+(1-u_2)^{-1/p}({1+a_1x_1})-1-a_1x_1=x_2(a_2+bx_1)\\
 x_2=\frac{\left(1-u_2\right)^{-\frac{1}{p}}+a_1x_1\left(1-u_2\right)^{-\frac{1}{p}}-a_1x_1-1}{a_2+bx_1}
 \end{gathered}
 $$
@@ -115,7 +132,8 @@ Q_{21}(u_2\vert u_1)=\frac{\left(1-u_2\right)^{-\frac{1}{p}}-1+[(1-u_1)^{-1/p}-a
 Q_{21}(u_2\vert u_1)=\frac{a_1[\left(1-u_2\right)^{-\frac{1}{p}}-1][(1-u_1)^{-1/p}-a_1+1]}{a_1a_2+b[(1-u_1)^{-1/p}-a_1]}
 \end{gathered}
 $$
-This is also somewhat different from the example in the paper.
+
+This is also somewhat different from the solution in the paper.
 
 
 ### Gumbel's bivariate exponential distribution
