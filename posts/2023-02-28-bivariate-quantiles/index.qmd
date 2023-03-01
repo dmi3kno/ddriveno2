@@ -6,6 +6,11 @@ categories: [paper review, quantiles]
 image: "fig-bvn-pdf-1.png"
 image-width: 200px
 bibliography: references.bib
+citation:
+  type: "webpage"
+  container-title: "$d /drive blog"
+  author: "Dmytro Perepolkin"
+  url: "https://www.ddrive.no/posts/2023-02-28-bivariate-quantiles/"
 ---
 
 ```{r}
@@ -287,11 +292,11 @@ Property 8 says that for the positive QFs the product is also a valid conditiona
 
 ## Conclusion
 
-So why do we care? Given what we have discussed in @perepolkin2021TenetsQuantilebasedInference, priors can be defined using the quantile functions without the need to define the densities. This not only means that you dont need PDFs to define the prior, but also that you don't need QDF, because it will cancel itself with the Jacobian.
+So why do we care? Given what we have discussed in @perepolkin2021TenetsQuantilebasedInference, priors can be defined using the quantile functions without the reference to the densities. This not only means that you don't need PDFs to define the prior, but also that you don't need QDF, because it will cancel itself with the Jacobian.
 
-Now with bQFs, you can define the bivariate priors using quantile functions, provided that the conditional bQF $Q_{21}$ makes sense.
+Now with bQFs, you can define the bivariate priors using quantile functions, provided that the conditional bQF $Q_{21}$ that you crafted makes sense.
 
-Perhaps some Stan examples would be in order. I am sure we will come back to the bivariate quantiles for some cool quantile distribution soon.
+Perhaps some Stan examples would be in order. I am sure we will come back to the bivariate quantiles for some cool quantile distribution application soon.
 
 ## References
 
